@@ -11,7 +11,12 @@
   <body>
     <script src="chron.js"></script>
     <script defer>
-      var now = chron.snap('Hello World!');
+      var fake = {
+        Text: 'Hello World!',
+        Number: 123456,
+        Func: function (txt) { return txt; }
+      };
+      var now = chron.snap(fake);
       console.log(now);
     </script>
   </body>
