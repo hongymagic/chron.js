@@ -48,18 +48,21 @@ var chron = (function (global) {
     },
 
     /**
-     * Returns all times of all snapshots captured by chron.js. Time are sorted
-     * in descending order (more recent first)
+     * Returns all times of all snapshots captured by chron.js. Time are 
+     * sorted in descending order (more recent first)
      *
      * @private
      * @returns {Array} of times (in milliseconds after the epoch)
      */
     _timeline = function () {
-      var timeline = Object.keys(_store);
+      var timeline = Object.keys(_store),
+          desc = function (a, b) {
+            return Number(b) - Number(a);
+          };
 
 // Sort given times in descending order
 
-      timeline = timeline.sort(function (a, b) { return Number(b) - Number(a); });
+      timeline = timeline.sort(desc)
       return timeline;
     };
 
@@ -94,12 +97,12 @@ var chron = (function (global) {
       var result = [],
           timeline = _timeline(),
           index,
-          length;
+          length = count > timeline.length ? timeline.length : count;
 
-// Now with sorted timeline, access value componet of the localStorage for given
-// times and return them
+// Now with sorted timeline, access value componet of the localStorage for
+// given times and return them
 
-      for (index = 0, length = count > timeline.length ? timeline.length : count; index < length; index++) {
+      for (index = 0; index < length; index++) {
         result.push(_getItem(timeline[index]));
       }
 
