@@ -12,13 +12,13 @@ var chron = (function (global) {
 
   var 
 
-    supportsStorage = function () {
+    supportsStorage = (function () {
       try {
         return !!global.localStorage;
       } catch (e) {
         return false;
       }
-    }(),
+    }()),
     localStorage = global.localStorage,
 
     serialize = function (object) {
@@ -37,14 +37,26 @@ var chron = (function (global) {
      *  tineN: { object }
      * }
      */
-    _store = {},
+    _store = supportsStorage ? deserialize(localStorage.getItem('chron.js')) : {},
     _getItem = function (key) {
       return deserialize(_store[key]);
     },
     _setItem = function (value) {
       var timestamp = +(new Date);
       _store[timestamp] = serialize(value);
+
+      if (supportsStorage) {
+        localStorage.setItem('chron.js', serialize(_store));
+      }
+
       return timestamp;
+    },
+    _clear = function () {
+      _store = {};
+
+      if (supportsStorage) {
+        localStorage.setItem('chron.js', serialize(_store));
+      }
     },
 
     /**
@@ -113,7 +125,7 @@ var chron = (function (global) {
      * Reset and clear all snapshots captured by chron.js
      */
     reset: function () {
-      _store = {};
+      _clear();
     }
   };
 }(this));
