@@ -19,13 +19,32 @@ var chron = (function (global) {
         return false;
       }
     }(),
-    localStorage = supportsStorage ? global.localStorage : {},
+    localStorage = global.localStorage,
 
     serialize = function (object) {
       return JSON.stringify(object);
     },
     deserialize = function (serial) {
       return JSON.parse(serial);
+    },
+
+    /**
+     * Custom storage object
+     *
+     * {
+     *  time1: { object }
+     *  ..
+     *  tineN: { object }
+     * }
+     */
+    _store = {},
+    _getItem = function (key) {
+      return deserialize(_store[key]);
+    },
+    _setItem = function (value) {
+      var timestamp = +(new Date);
+      _store[timestamp] = serialize(value);
+      return timestamp;
     },
 
     /**
@@ -36,26 +55,11 @@ var chron = (function (global) {
      * @returns {Array} of times (in milliseconds after the epoch)
      */
     _timeline = function () {
-      var timeline = [],
-          index,
-          length,
-          time;
+      var timeline = Object.keys(_store);
 
-//
-// Query localStorage object and extract all time-based KVP
-
-      for (index = 0, length = localStorage.length; index < length; index++) {
-        time = localStorage.key(index);
-        if (!/^[0-9]+$/.test(time)) 
-          continue;
-
-        timeline.push(time);
-      }
-
-//
 // Sort given times in descending order
 
-      timeline = timeline.sort(function (a, b) { return b - a; });
+      timeline = timeline.sort(function (a, b) { return Number(b) - Number(a); });
       return timeline;
     };
 
@@ -69,10 +73,7 @@ var chron = (function (global) {
      *  chron.snap($form)
      */
     snap: function (value) {
-      var time = +(new Date);
-      localStorage.setItem(time, serialize(value));
-      console.log(value, serialize(value));
-      return time;
+      return _setItem(value);
     },
 
     /**
@@ -95,12 +96,11 @@ var chron = (function (global) {
           index,
           length;
 
-// 
 // Now with sorted timeline, access value componet of the localStorage for given
 // times and return them
 
-      for (index = 0, length = timeline.length; index < length; index++) {
-        result.push(deserialize(localStorage.getItem(timeline[index])));
+      for (index = 0, length = count > timeline.length ? timeline.length : count; index < length; index++) {
+        result.push(_getItem(timeline[index]));
       }
 
       return result;
@@ -110,13 +110,7 @@ var chron = (function (global) {
      * Reset and clear all snapshots captured by chron.js
      */
     reset: function () {
-      var timeline = _timeline(),
-          index,
-          length;
-      
-      for (index = 0, length = timeline.length; index < length; index++) {
-        localStorage.removeItem(timeline[index]);
-      }
+      _store = {};
     }
   };
 }(this));

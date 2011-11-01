@@ -11,13 +11,37 @@
   <body>
     <script src="chron.js"></script>
     <script defer>
-      var fake = {
-        Text: 'Hello World!',
-        Number: 123456,
-        Func: function (txt) { return txt; }
-      };
-      var now = chron.snap(fake);
-      console.log(now);
+      var 
+
+        mock = function (index) {
+          return {
+            'index': index,
+            'echo': function (txt) { return txt; },
+            'timestamp': +(new Date),
+            'deep': {
+              'horizon': {
+                'blues!': 'Yeah yeah!'
+              }
+            }
+          };
+        },
+
+        MAX_FAKES = 5,
+        index;
+
+      for (index = 0; index < MAX_FAKES; index++) {
+        setTimeout(function (index) {
+          return function () {
+            chron.snap(mock(index));
+          }
+        }(index), 100 * index);
+      }
+
+      setTimeout(function () {
+        console.log(chron.list());
+        console.log(chron.list(100));
+        console.log(chron.list(2));
+      }, 1000);
     </script>
   </body>
 </html>
