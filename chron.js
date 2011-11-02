@@ -1,4 +1,5 @@
 
+/*jslint node: true, indent: 2, browser: true, es5: true, plusplus: true */
 /**
  * chron.js - a time-based storage interface
  *
@@ -42,7 +43,7 @@ var chron = (function (global) {
       return deserialize(_store[key]);
     },
     _setItem = function (value) {
-      var timestamp = +(new Date);
+      var timestamp = +(new Date());
       _store[timestamp] = serialize(value);
 
       if (supportsStorage) {
@@ -74,9 +75,13 @@ var chron = (function (global) {
 
 // Sort given times in descending order
 
-      timeline = timeline.sort(desc)
+      timeline = timeline.sort(desc);
       return timeline;
     };
+
+  if ('undefined' === typeof _store || _store === null) {
+    _store = {};
+  }
 
   return {
     /**
@@ -102,7 +107,7 @@ var chron = (function (global) {
      */
     list: function (count) {
       count = (+count) | 0;
-      if (count == 0) { 
+      if (count === 0) { 
         return [];
       }
 
@@ -114,7 +119,7 @@ var chron = (function (global) {
 // Now with sorted timeline, access value componet of the localStorage for
 // given times and return them
 
-      for (index = 0; index < length; index++) {
+      for (index = 0; index < length; index += 1) {
         result.push(_getItem(timeline[index]));
       }
 
@@ -133,7 +138,7 @@ var chron = (function (global) {
 //
 // Export this module
 
-if ('undefined' != typeof module) {
+if ('undefined' !== typeof module) {
   module.exports = chron;
 }
 
