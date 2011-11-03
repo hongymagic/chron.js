@@ -68,10 +68,12 @@ var chron = (function (global) {
      * @returns {Array} of times (in milliseconds after the epoch)
      */
     _timeline = function () {
-      var timeline = Object.keys(_store),
-          desc = function (a, b) {
-            return Number(b) - Number(a);
-          };
+      var 
+      
+        timeline = Object.keys(_store),
+        desc = function (a, b) {
+          return Number(b) - Number(a);
+        };
 
 // Sort given times in descending order
 
@@ -111,10 +113,12 @@ var chron = (function (global) {
         return [];
       }
 
-      var result = [],
-          timeline = _timeline(),
-          index,
-          length = count > timeline.length ? timeline.length : count;
+      var 
+      
+        result = [],
+        timeline = _timeline(),
+        index,
+        length = count > timeline.length ? timeline.length : count;
 
 // Now with sorted timeline, access value componet of the localStorage for
 // given times and return them
