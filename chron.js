@@ -40,11 +40,11 @@ var chron = (function (global) {
      */
     _store = supportsStorage ? deserialize(localStorage.getItem('chron.js')) : {},
     _getItem = function (key) {
-      return deserialize(_store[key]);
+      return _store[key];
     },
     _setItem = function (value) {
       var timestamp = +(new Date());
-      _store[timestamp] = serialize(value);
+      _store[timestamp] = value;
 
       if (supportsStorage) {
         localStorage.setItem('chron.js', serialize(_store));
