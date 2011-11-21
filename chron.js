@@ -13,6 +13,8 @@ var chron = (function (global) {
 
   var 
 
+    DEFAULT_COUNT = 5,
+
     supportsStorage = (function () {
       try {
         return !!global.localStorage;
@@ -110,7 +112,7 @@ var chron = (function (global) {
     list: function (count) {
       count = (+count) | 0;
       if (count === 0) { 
-        return [];
+        count = DEFAULT_COUNT;
       }
 
       var 
