@@ -72,7 +72,7 @@ var chron = (function (global) {
     _timeline = function () {
       var 
       
-        timeline = Object.keys(_store),
+        timeline = Object.keys(_store).slice(0),
         desc = function (a, b) {
           return Number(b) - Number(a);
         };
@@ -110,8 +110,7 @@ var chron = (function (global) {
      *  chron.list(5);
      */
     list: function (count) {
-      count = (+count) | 0;
-      if (count === 0) { 
+      if (typeof count !== 'number' || count === null) {
         count = DEFAULT_COUNT;
       }
 
