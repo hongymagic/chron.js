@@ -1,84 +1,59 @@
 
-/*jslint node: true, indent: 2, browser: true, es5: true, plusplus: true */
+/*jslint node: true, indent: 2, browser: true, es5: true */
 
+var 
 
+  /* internal object store, used like stack */
+  store = [],
 
+  /* program defaults */
+  DEFAULT_COUNT = 5,
 
+  /* getters and setters */
+  snap,
+  list,
+  clear;
 
-
-var Chron = (function (global) {
-
-
-
+snap = function () {
   var 
   
-    supportsStorage = function () {
-      try {
-        return !!global.localStorage.getItem;
-      } catch (e) {
-        return false;
-      }
-    }(),
+    args = [].slice.call(arguments),
+    index, length, value;
 
-// 
-// Simple stack data structure
+  for (index = 0, length = args.length; index < length; index += 1) {
+    store.push({
+      timestamp: +(new Date()),
+      value: args[index]
+    });
+  }
+};
 
-    Stack = function (size) {
-      this.size   = (size | 0);
-      this._store = [];
-    };
+list = function (count) {
+  if (typeof count !== 'number') {
+    count = DEFAULT_COUNT;
+  }
 
-  Stack.prototype.push = function (object) {};
-  Stack.prototype.pop = function (count) {};
+  var
 
+    length = store.length,
+    index = length - count;
 
-  return {
-    /**
-     * take a snapshot of an object
-     *
-     * @param   {Object}  object to store in timeline
-     * @returns {Date}    timestamp in milliseconds since the Unix epoch
-     */
-    snap: function (object) {
-    },
+  return store.slice(index, length).reverse();
+};
 
-    /**
-     * retrieve number of snapshots in a sorted array, in descending order
-     *
-     * @param   {Number}  number of objects to return
-     * @returns {Array}   array of boxed objects that contain timestamp as property
-     */
-    timeline: function () {
-    }
-  };
-})(this));
+(function () {
+  snap(1);
+  snap(5, 4, 3, 2, 1);
 
-//
-// check for module support
+  console.log(store);
+  console.log(list(2));
 
-if (module.exports) {
-  module.exports = Chron;
-}
-
-
-//
-// [
-//  {
-//    timestamp: +new Date,
-//    value: object
-//  }
-//  ...
-// ]
-//
-
-
-
-
-
-
-
-
-
+  setTimeout(function () {
+    snap('Hello World');
+  console.log(list(1));
+  console.log(list(0));
+  }, 100);
+}());
 
 
 
