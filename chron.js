@@ -50,8 +50,8 @@ list = function (count) {
 
   setTimeout(function () {
     snap('Hello World');
-  console.log(list(1));
-  console.log(list(0));
+    console.log(list(1));
+    console.log(list(0));
   }, 100);
 }());
 
