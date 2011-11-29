@@ -1,31 +1,31 @@
-# chron.js API
 
-## .snap(in any value) => out datetime
+# What is it?
 
-Take a snapshot of the value at any given time and it will return a `datetime` in number of milliseconds since the Epoch.
+Simple, persisted, and stacked data-store with emphasis on `time`. 
 
-Rest assured, your value will be persistent.
+I made this as part of an in-house project to store and display recently 
+entered, non-sensitive, `form` data.
 
-	var form = { name: 'John Appleseed', age: 29 };
-	var last = chron.snap(form);
+# The Cook Book
 
-## .list(in number) => out [value] array
+`chron.js` only has three, but aliased to more, interface calls. Just like any
+stack operation, you:
 
-Returns a list of most recent number of values saved. The returned `array` will contain most recent value at index zero.
+  1. Place it in the stack;
+  2. Retrieve item in the stack; and
+  3. Clear the stack.
 
-	var recent = chron.list();
-	// [{ name: 'John Appleseed', age: 29 }]
+## Capturing a moment of any `object`'s life
 
-You can also supply number of recent values to return:
+  var recents = Chron('recently viewed'); // `new` is _optional_
+  recents.snap({ product: ... });
 
-	var recent = chron.list(5);
-	recent.length;
-	// 5 (or less, if you don't have enough snapshots)
+## Re-living them precious moments
 
-# Why?
+  var recents = Chron('recently viewed');
+  var products = recents.list(5); // 5 is _optional_, defaults to 5
 
+## Wipe. Them. All.
 
+  Chron('recently viewed').clear();
 
-# TODO
-
-- Write why
