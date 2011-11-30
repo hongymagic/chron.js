@@ -1,4 +1,4 @@
-# What is it?
+# What is `chron.js`?
 
 Simple, persisted, and stacked data-store with emphasis on `time`. 
 
@@ -36,3 +36,8 @@ later date and run:
 
     var recents = Chron('recently viewed');
     // your previous snapped items will be loaded by default
+
+# What the name??
+
+The name is derived from the word _chronology_ and has no relevance to `unix`
+command `cron`.
