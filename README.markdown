@@ -28,3 +28,11 @@ stack operation, you:
 
     Chron('recently viewed').clear();
 
+# Persistence
+
+If the browser supports `localStorage`, `chron.js` will persist all instances
+via the `localStorage`. This means that when you come back to the site at a
+later date and run:
+
+    var recents = Chron('recently viewed');
+    // your previous snapped items will be loaded by default
