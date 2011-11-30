@@ -1,4 +1,3 @@
-
 # What is it?
 
 Simple, persisted, and stacked data-store with emphasis on `time`. 
@@ -11,21 +10,21 @@ entered, non-sensitive, `form` data.
 `chron.js` only has three, but aliased to more, interface calls. Just like any
 stack operation, you:
 
-  1. Place it in the stack;
-  2. Retrieve item in the stack; and
-  3. Clear the stack.
+    1. Place it in the stack;
+    2. Retrieve item in the stack; and
+    3. Clear the stack.
 
 ## Capturing a moment of any `object`'s life
 
-  var recents = Chron('recently viewed'); // `new` is _optional_
-  recents.snap({ product: ... });
+    var recents = Chron('recently viewed'); // `new` is _optional_
+    recents.snap({ product: ... });
 
 ## Re-living them precious moments
 
-  var recents = Chron('recently viewed');
-  var products = recents.list(5); // 5 is _optional_, defaults to 5
+    var recents = Chron('recently viewed');
+    var products = recents.list(5); // 5 is _optional_, defaults to 5
 
 ## Wipe. Them. All.
 
-  Chron('recently viewed').clear();
+    Chron('recently viewed').clear();
 
