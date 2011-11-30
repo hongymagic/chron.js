@@ -24,7 +24,12 @@
         return [];
       }
 
-      return JSON.parse(localStorage.getItem(key(name)));
+      var store = localStorage.getItem(key(name));
+      if (typeof store !== 'undefined' && store !== null) {
+        return JSON.parse(localStorage.getItem(key(name)));
+      } else {
+        return [];
+      }
     },
 
     Chron;
@@ -69,6 +74,11 @@
 
       length = this.store.length,
       index = length - count;
+
+    // We want positive slicing, not negative
+    if (index < 0) {
+      index = 0;
+    }
 
     return this.store.slice(index, length).reverse();
   };
