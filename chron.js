@@ -51,17 +51,19 @@
 // we snap each argument, one by one
 
       args = [].slice.call(arguments),
+      timestamp = +(new Date()),
       index, 
       length;
 
     for (index = 0, length = args.length; index < length; index += 1) {
       this.store.push({
-        timestamp: +(new Date()),
+        timestamp: timestamp,
         value: args[index]
       });
     }
 
     backup(this.name, this.store);
+    return timestamp;
   };
 
   Chron.prototype.list = function (count) {

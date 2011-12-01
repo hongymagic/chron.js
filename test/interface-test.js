@@ -2,24 +2,20 @@
 module('Interface test');
 
 test('simple snap, list length integrity test', function () {
-  var timeline = Chron('timeline');
-  
-  timeline.snap(1);
-  timeline.snap(2);
-  timeline.snap(3);
-  timeline.snap(4);
+  var timeline = Chron('timeline'),
+      timestamp = timeline.snap(true, false, 1, 3.14, 'Hello World', { fruit: 'Banana' }),
+      history = timeline.list(6),
+      expected = [
+        { timestamp: timestamp, value: { fruit: 'Banana' } },
+        { timestamp: timestamp, value: 'Hello World' },
+        { timestamp: timestamp, value: 3.14 },
+        { timestamp: timestamp, value: 1 },
+        { timestamp: timestamp, value: false },
+        { timestamp: timestamp, value: true }
+      ];
 
-  var history = timeline.list();
-
-  equal(history.length, 4, 'I just snapped four!');
+  deepEqual(history, expected, 'snap. list. complete.');
 });
-
-
-
-
-
-
-
 
 // Clean up after this test
 if (localStorage) {
