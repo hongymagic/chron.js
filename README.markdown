@@ -17,15 +17,20 @@ stack operation, you:
 
 ## Capturing a moment of any `object`'s life
 
-  var recents = Chron('recently viewed'); // `new` is _optional_
-  recents.snap({ product: ... });
+    var recents = Chron('recently viewed'); // `new` is _optional_
+    recents.snap({ product: ... });
 
 ## Re-living them precious moments
 
-  var recents = Chron('recently viewed');
-  var products = recents.list(5); // 5 is _optional_, defaults to 5
+    var recents = Chron('recently viewed');
+    var products = recents.list(5); // 5 is _optional_, defaults to 5
 
 ## Wipe. Them. All.
 
-  Chron('recently viewed').clear();
+    Chron('recently viewed').clear();
+
+# Persistence
+
+`chron.js` instances will use `localStorage` to store/restore any items that
+have been snapped.
 
